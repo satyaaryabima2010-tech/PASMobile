@@ -1,0 +1,52 @@
+
+import 'package:get/get.dart';
+import 'package:pas_flutter/models/list_model.dart';
+
+class ListProdukController extends GetxController {
+  final List<ProdukModel> dataAwal = [
+  //List<ProdukModel> ListProduk = 
+    ProdukModel(namaProduk: "Nasi Goreng Spesial", harga: "25.000 Rp", foto: "foto/indomie.jpg", 
+     deskripsi: "Nasi goreng bumbu rempah dengan telur mata sapi, ayam suwir, dan kerupuk.", ),
+    ProdukModel(namaProduk: "Ayam Bakar Madu", harga: "30.000 Rp", foto: "foto/indomieGodhog.jpg", 
+     deskripsi: "Ayam bakar olesan madu murni lengkap dengan sambal terasi dan lalapan.", ),
+    ProdukModel(namaProduk: "Indomie Goreng Spesial", harga: "10.000 Rp", foto: "foto/indomieGrGS.jpg", 
+     deskripsi: "Indomie Goreng Spesial adalah varian Indomie yang memiliki rasa yang lebih istimewa dan lezat. Makanan ini cocok untuk dinikmati sebagai camilan atau makanan utama.", ),
+    ProdukModel(namaProduk: "Indomie Soto", harga: "6000 Rp", foto: "foto/indomieSoto.jpg", 
+     deskripsi: "Indomie Soto adalah varian Indomie yang memiliki rasa yang khas dan lezat. Makanan ini cocok untuk dinikmati sebagai camilan atau makanan utama.", ),
+    ProdukModel(namaProduk: "Indomie Rendang", harga: "6000 Rp", foto: "foto/indomieRndg.jpg", 
+     deskripsi: "Indomie Rendang adalah varian Indomie yang memiliki rasa yang kaya dan gurih. Makanan ini cocok untuk dinikmati sebagai camilan atau makanan utama.", ),
+  ];
+   late final List<ProdukModel> _dataAsli = List.from(dataAwal);
+
+  final RxList<ProdukModel> ListProduk = <ProdukModel>[].obs;
+
+  final RxInt selectedIndex = 0.obs;
+
+  void changePage(int index) {
+    selectedIndex.value = index;
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    ListProduk.assignAll(_dataAsli);
+  }
+
+  void hapusProduk(ProdukModel produk) {
+    ListProduk.remove(produk);
+  }
+
+  Future<void> refreshProduk() async {
+    await Future.delayed(const Duration(seconds: 1));
+    ListProduk.assignAll(_dataAsli);
+  }
+  
+
+  void pulihkanProduk(ProdukModel produk, int index) {
+    if (index >= 0 && index <= ListProduk.length) {
+      ListProduk.insert(index, produk);
+    } else {
+      ListProduk.add(produk);
+    }
+  }
+}
